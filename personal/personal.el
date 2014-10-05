@@ -26,6 +26,7 @@
 (add-hook 'js-mode-hook
           (lambda ()
             (add-hook 'before-save-hook 'web-beautify-js-buffer t t)))
+
 ;; Autocomplete
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/dict")
@@ -37,6 +38,10 @@
    '(progn
       (require 'tern-auto-complete)
       (tern-ac-setup)))
+
+;; Jade Mode
+(prelude-require-package 'jade-mode)
+(add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
 
 ;; Comment Cmd-/
 (defun comment-current-line-dwim ()
