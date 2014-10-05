@@ -43,6 +43,10 @@
 (prelude-require-package 'jade-mode)
 (add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
 
+;; Solarized Theme
+(prelude-require-package 'solarized-theme)
+(load-theme 'solarized-light t)
+
 ;; Comment Cmd-/
 (defun comment-current-line-dwim ()
   "Comment or uncomment the current line."
