@@ -43,9 +43,31 @@
 (prelude-require-package 'jade-mode)
 (add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
 
+;; Wolfram Language
+(prelude-require-package 'wolfram-mode)
+(autoload 'wolfram-mode "wolfram-mode" nil t)
+(autoload 'run-wolfram "wolfram-mode" nil t)
+(setq wolfram-program "/Applications/Mathematica.app/Contents/MacOS/WolframKernel")
+(add-to-list 'auto-mode-alist '("\\.m$" . wolfram-mode))
+
 ;; Solarized Theme
 (prelude-require-package 'solarized-theme)
 (load-theme 'solarized-light t)
+
+;; CLisp
+(setq slime-default-lisp 'clisp)
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(setq inferior-lisp-program "clisp")
+
+;; Disable Dialogue Box
+(defadvice yes-or-no-p (around prevent-dialog activate)
+  "Prevent yes-or-no-p from activating a dialog"
+  (let ((use-dialog-box nil))
+    ad-do-it))
+(defadvice y-or-n-p (around prevent-dialog-yorn activate)
+  "Prevent y-or-n-p from activating a dialog"
+  (let ((use-dialog-box nil))
+    ad-do-it))
 
 ;; Comment Cmd-/
 (defun comment-current-line-dwim ()
