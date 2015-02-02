@@ -50,6 +50,10 @@
 (setq wolfram-program "/Applications/Mathematica.app/Contents/MacOS/WolframKernel")
 (add-to-list 'auto-mode-alist '("\\.m$" . wolfram-mode))
 
+;; Multi-Term
+(prelude-require-package 'multi-term)
+(setq multi-term-program "/usr/local/bin/zsh")
+
 ;; Solarized Theme
 (prelude-require-package 'solarized-theme)
 (load-theme 'solarized-light t)
