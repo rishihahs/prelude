@@ -9,21 +9,19 @@
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 
 ;; JS-Mode
-(prelude-require-packages '(js2-mode
-                            flycheck
+(prelude-require-packages '(flycheck
                             web-beautify
                             auto-complete
                             tern
                             tern-auto-complete))
-(add-hook 'js-mode-hook 'js2-minor-mode) ;; js2 mode
 (setq js2-highlight-level 3)
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode)) ;; json files are js2 mode
 
 ;; JSHint
-(add-hook 'js-mode-hook
+(add-hook 'js2-mode-hook
           (lambda () (flycheck-mode t)))
 ;; JSBeautify
-(add-hook 'js-mode-hook
+(add-hook 'js2-mode-hook
           (lambda ()
             (add-hook 'before-save-hook 'web-beautify-js-buffer t t)))
 
