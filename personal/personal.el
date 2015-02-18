@@ -15,7 +15,6 @@
                             tern
                             tern-auto-complete))
 (setq js2-highlight-level 3)
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode)) ;; json files are js2 mode
 
 ;; JSHint
 (add-hook 'js2-mode-hook
