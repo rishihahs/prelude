@@ -8,6 +8,87 @@
 
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 
+;; Helm ggtags for C++
+(setq
+  helm-gtags-ignore-case t
+  helm-gtags-auto-update t
+  helm-gtags-use-input-at-cursor t
+  helm-gtags-pulse-at-cursor t
+  helm-gtags-prefix-key "\C-cg"
+  helm-gtags-suggested-key-mapping t
+  )
+
+(prelude-require-package 'helm-gtags)
+;; Enable helm-gtags-mode
+(add-hook 'dired-mode-hook 'helm-gtags-mode)
+(add-hook 'eshell-mode-hook 'helm-gtags-mode)
+(add-hook 'c-mode-hook 'helm-gtags-mode)
+(add-hook 'c++-mode-hook 'helm-gtags-mode)
+(add-hook 'asm-mode-hook 'helm-gtags-mode)
+
+(eval-after-load "helm-gtags"
+  '(progn
+     (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+     (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+     (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+     (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
+     (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
+     (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history)))
+
+;; function-args for C++
+(prelude-require-package 'function-args)
+(fa-config-default)
+
+;; SR-Speedbar
+(prelude-require-package 'sr-speedbar)
+
+;; Semantic Mode for C++
+(prelude-require-packages '(cc-mode
+                            semantic))
+
+(eval-after-load "semantic"
+  '(progn
+     (global-semanticdb-minor-mode 1)
+     (global-semantic-idle-scheduler-mode 1)
+     (global-semantic-idle-summary-mode 1)
+     (global-semantic-stickyfunc-mode 1)))
+
+(semantic-mode 1)
+
+;; EDE for C++
+(prelude-require-package 'ede)
+(global-ede-mode)
+
+;; Company-C-Headers
+(prelude-require-package 'company-c-headers)
+(add-to-list 'company-backends 'company-c-headers)
+
+;; C++ Headers
+(defun ede-object-system-include-path ()
+  "Return the system include path for the current buffer."
+  (when ede-object
+    (ede-system-include-path ede-object)))
+
+(setq company-c-headers-path-system 'ede-object-system-include-path)
+
+;; Support for Source Code folding
+(add-hook 'c-mode-common-hook 'hs-minor-mode)
+
+(global-set-key (kbd "RET") 'newline-and-indent)  ; automatically indent when press RET
+
+;; Package: clean-aindent-mode
+(prelude-require-package 'clean-aindent-mode)
+(add-hook 'prog-mode-hook 'clean-aindent-mode)
+
+;; Package: dtrt-indent
+(prelude-require-package 'dtrt-indent)
+(dtrt-indent-mode 1)
+(setq dtrt-indent-verbosity 0)
+
+;; Package: ws-butler
+(prelude-require-package 'ws-butler)
+(add-hook 'c-mode-common-hook 'ws-butler-mode)
+
 ;; JS-Mode
 (prelude-require-packages '(flycheck
                             web-beautify
